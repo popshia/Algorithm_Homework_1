@@ -12,6 +12,7 @@ class Sudoku():
         self.board = board
 
         self.size = len(self.board[0])
+        # set missing box as 1, known box as -1
         self.choices = [-1 if self.board[i][j] else 1
                         for i in range(self.size)
                         for j in range(self.size)]
@@ -25,10 +26,10 @@ class Sudoku():
                 print(digits, end = '')
             print("")
 
-    def row(self, n):
+    def row(self, n): # return the row(y) of the current posotion
         return n in self.board[self.y]
 
-    def col(self, n):
+    def col(self, n): # return the coloumn(x) of the current posotion
         return n in [self.board[_][self.x]
                      for _ in range(9)]
 
