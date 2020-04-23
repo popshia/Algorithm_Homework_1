@@ -29,23 +29,23 @@ class Sudoku():
     def row(self, n): # return the row(y) of the current posotion
         return n in self.board[self.y]
 
-    def col(self, n): # return the coloumn(x) of the current posotion
+    def col(self, n): # return the column(x) of the current posotion
         return n in [self.board[_][self.x]
                      for _ in range(9)]
 
-    def square(self, n):
+    def square(self, n): # return the cordinates in the current square
         return n in [self.board[b][a]
                      for a in range(self.x//3*3, self.x//3*3+3)
                      for b in range(self.y//3*3, self.y//3*3+3)]
 
-    def collision(self, n):
+    def collision(self, n): # check if there's any same elements in the row, column or square
         if self.row(n) or\
            self.col(n) or\
            self.square(n):
             return True
         else: return False
 
-    def backward(self):
+    def backward(self): # walk backward the matrix
         self.board[self.y][self.x] = 0
         self.choices[self.c] = 1
         if self.x == 0:
@@ -61,14 +61,14 @@ class Sudoku():
             else:
                 self.x -= 1
 
-    def forward(self):
+    def forward(self): # walk forward the matrix
         if self.x == 8:
             self.x = 0
             self.y += 1
         else:
             self.x += 1
 
-    def isEnd(self):
+    def isEnd(self): # check if the sudoku is solved or not
         for row in self.board:
             if 0 in row:
                 return False
@@ -78,26 +78,24 @@ class Sudoku():
     def run(self):
         while not self.isEnd():
             self.c = self.y*self.size+self.x
-            if self.choices[self.c] != -1:
-                if self.collision(self.choices[self.c]):
-
+            if self.choices[self.c] != -1: # if the sudoku needs to be solved
+                if self.collision(self.choices[self.c]): # check if there's any same elements
                     # Error
-                    if self.choices[self.c] != 9:
+                    if self.choices[self.c] != 9: # check if everybox is solved(1*9=9)
                         self.choices[self.c] += 1
                         continue
-
                     # Back
-                    else:
+                    else: # if not, backward
                         self.backward()
 
                 # Success
-                else:
+                else: # if no collision, fill in
                     self.board[self.y][self.x] = self.choices[self.c]
                     # plot()
 
                     self.forward()
 
-            else:
+            else: # no need to be solved, next matrix
                 self.forward()
 
         self.plot()
@@ -106,8 +104,8 @@ class Sudoku():
 if __name__ == '__main__':
     w = 9
     h = 9
-    board = [[0 for x in range(w)] for y in range(h)] 
-    for i in range(9):
+    board = [[0 for x in range(w)] for y in range(h)] # set the 9x9 board
+    for i in range(9): # fill in the values
         singleColumn = []
         singleLine = input()
         for digits in singleLine:
