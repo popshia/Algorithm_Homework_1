@@ -34,7 +34,7 @@ def Find(A, low, high):
 
 
 def FindCrossingArray(A, low, mid, high):
-    left_sum = -1
+    left_sum = -3000000
     sum = 0
     for i in range(mid, low - 1, -1): # add left values
         sum += A[i]
@@ -42,7 +42,7 @@ def FindCrossingArray(A, low, mid, high):
             left_sum = sum
             max_left = i
 
-    right_sum = -1
+    right_sum = -3000000
     sum = 0
     for j in range(mid + 1, high + 1): # add right values
         sum += A[j]
